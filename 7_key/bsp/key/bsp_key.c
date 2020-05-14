@@ -5,11 +5,15 @@
 //0101 ALT5 — Select mux mode: ALT5 mux port: GPIO1_IO18 of instance: gpio1
 void key_Init (void)
 {
+    _gpio_pin_congfig_t key_config; //定义结构体指针
     IOMUXC_SetPinMux(IOMUXC_UART1_CTS_B_GPIO1_IO18,0);      //复用配置
     // 0 | 11 | 1 | 1 | 0| 000 | 10 | 000 | 00 | 0
     IOMUXC_SetPinConfig(IOMUXC_UART1_CTS_B_GPIO1_IO18,0XF080);    //电气配置
 
-    GPIO1 -> GDIR &= ~(1<<18);//第18位清0
+    key_config.direction = KGPIO_Digital_InpUt; //指针赋值输入
+    GPIO_Init(GPIO1 , 18 , &key_config);   //指针
+
+    //GPIO1 -> GDIR &= ~(1<<18);//第18位清0
 }
 
 /*读取按键值
@@ -18,7 +22,8 @@ void key_Init (void)
 int key_Read(void)
 {
     int ret;
-    ret = ((GPIO1 -> DR) >> 18) & 0X1;
+    //ret = ((GPIO1 -> DR) >> 18) & 0X1;
+    ret = gpio_pin_read(GPIO1 , 18);
     return ret;
 }
 

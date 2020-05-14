@@ -4,6 +4,7 @@
 /*GPIO初始化*/
 void led_init(void)
 {
+	_gpio_pin_congfig_t led_config;
 	
 	/* 1、初始化IO复用 */
 	//V1 SW_MUX_GPIO1_IO03 = 0x5;	/* 复用为GPIO1_IO03 */
@@ -28,11 +29,16 @@ void led_init(void)
 	/* 3、初始化GPIO 方向 */
 	//V1 PIO1_GDIR = 0X0000008;	/* GPIO1_IO03设置为输出 */
 	//V2 GPIO1->GDIR = 0X0000008;
-	GPIO1->GDIR = 0X0000008;
+	//v3 GPIO1->GDIR = 0X0000008;
+	led_config.direction = KGPIO_Digital_Output;
+	
 	/* 4、设置GPIO1_IO03输出低电平，打开LED0 */
 	//V1 GPIO1_DR = 0X0;
 	//V2 GPIO1->DR = 0X0;
-	GPIO1->DR = 0X0;
+	//v3 GPIO1->DR = 0X0;
+	led_config.outputLogic = 0;
+	GPIO_Init(GPIO1, 3 , &led_config);
+
 
 }
 
@@ -42,14 +48,16 @@ void led_on(void)
 	/* 
 	 * 将GPIO1_DR的bit3清零	 
 	 */
-	GPIO1->DR &= ~(1<<3); //on
+	//GPIO1->DR &= ~(1<<3); //on
+	gpio_pin_write(GPIO1 , 3 , 0);
 }
 void led_off(void)
 {
 	/*    
 	 * 将GPIO1_DR的bit3置1
 	 */
-	GPIO1->DR |= (1<<3);    //off
+	//GPIO1->DR |= (1<<3);    //off
+	gpio_pin_write(GPIO1 , 3 , 1);
 }
 
 /*led控制*/

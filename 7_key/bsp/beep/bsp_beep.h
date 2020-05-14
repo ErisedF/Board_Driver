@@ -7,6 +7,9 @@
 #include "cc.h"
 
 
+#include "bsp_gpio.h"
+
+
 void beep_init(void);
 void beep_on(void);
 void beep_off(void);

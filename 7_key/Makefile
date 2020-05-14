@@ -1,5 +1,5 @@
 CROSS_COMPILE ?= arm-linux-gnueabihf-
-TARGET		  ?= key_bsp
+TARGET		  ?= key_bsp_v1
 
 CC			  := $(CROSS_COMPILE)gcc
 LD			  := $(CROSS_COMPILE)ld 
@@ -12,7 +12,8 @@ INCUDIRS 	  := imx6ull \
 				 bsp/clk \
 				 bsp/delay \
 				 bsp/beep \
-				 bsp/key
+				 bsp/key \
+				 bsp/gpio
 
 				 
 
@@ -22,7 +23,8 @@ SRCDIRS 	   := project \
 				  bsp/clk \
 				  bsp/delay \
 				  bsp/beep \
-				  bsp/key
+				  bsp/key \
+				  bsp/gpio
 
 #Makefile 指定头文件时需要 -I
 #$(patsubst <pattern>,<replacement>,<text>) ,搜索<text>，若符合<pattern>，则用<replacement>替换

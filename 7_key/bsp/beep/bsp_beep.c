@@ -3,7 +3,7 @@
 /*GPIO初始化*/
 void beep_init(void)
 {
-	
+	_gpio_pin_congfig_t beep_config;
 	/* 1、初始化IO复用 */
 	//V1 SW_MUX_GPIO1_IO03 = 0x5;	/* 复用为GPIO1_IO03 */
 	//V2 IOMUX_SW_MUX->GPIO1_IO03 = 0x5;
@@ -27,11 +27,15 @@ void beep_init(void)
 	/* 3、初始化GPIO 方向 */
 	//V1 PIO1_GDIR = 0X0000008;	/* GPIO1_IO03设置为输出 */
 	//V2 GPIO1->GDIR = 0X0000008;
-	GPIO5->GDIR |= (1 << 1);	
+	
+	//GPIO5->GDIR |= (1 << 1);
+	beep_config.direction = KGPIO_Digital_Output; //指针赋值输入
+	beep_config.outputLogic = 1;
 	/* 4、设置GPIO1_IO03输出低电平，打开LED0 */
 	//V1 GPIO1_DR = 0X0;
 	//V2 GPIO1->DR = 0X0;
-	GPIO5->DR |= (1 << 1);	  //  默认高电平 关闭
+	//GPIO5->DR |= (1 << 1);	  //  默认高电平 关闭
+	GPIO_Init(GPIO5 , 1 , &beep_config);
 
 }
 
@@ -41,7 +45,8 @@ void beep_on(void)
 	/* 
 	 * 将GPIO1_DR的bit3清零	 
 	 */
-	GPIO5->DR &= ~(1 << 1); //on
+	//GPIO5->DR &= ~(1 << 1); //on
+	gpio_pin_write(GPIO5 , 1 , 0);
 }
 
 void beep_off(void)
@@ -49,7 +54,8 @@ void beep_off(void)
 	/*    
 	 * 将GPIO1_DR的bit3置1
 	 */
-	GPIO5->DR |= (1 << 1);    //off
+	//GPIO5->DR |= (1 << 1);    //off
+	gpio_pin_write(GPIO5 , 1 , 1);
 }
 
 /*led控制*/

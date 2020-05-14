@@ -7,6 +7,8 @@
 #include "cc.h"
 
 #include "bsp_delay.h"
+#include "bsp_gpio.h"
+
 
 /*按键值*/
 enum keyvalue { KEY_NONE = 0 , KEY0_VALUE = 1};
