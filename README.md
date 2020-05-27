@@ -62,6 +62,10 @@ git push -u origin master<br>
 		*CSCMR1[PERCLK_CLK_SEL] ->0 derive clock from ipg clk root
 ### 注：配置时看是否需要`忙等待握手信号`
 
+## 9_int
+* 内容很多，注释很全，复习
+* 新加int exti 修改gpio
+
 		
 		
 		
