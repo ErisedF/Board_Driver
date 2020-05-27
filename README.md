@@ -63,9 +63,15 @@ git push -u origin master<br>
 ### 注：配置时看是否需要`忙等待握手信号`
 
 ## 9_int
-* 内容很多，注释很全，复习
-* 新加int exti 修改gpio
+* 看注释
+* 1.启动文件定义中断向量表，复位中断函数 ，IRQ中断入口
+* 2.int.h 应掌握c语言复杂函数定义，函数指针
+* 3.int.c 定义结构体 元素为函数指针
 
-		
+## 10_epit_timer
+* Chapter 24​: Enhanced Periodic Interrupt Timer (EPIT)
+
+
+	
 		
 		
