@@ -18,7 +18,7 @@ int main(void)
 {
     //int key_value;
     //int i = 0;
-    //unsigned char led_state = OFF;
+    unsigned char led_state = OFF;
     //unsigned char beep_state = OFF;
     /*初始化*/
     int_init();
@@ -35,12 +35,15 @@ int main(void)
 
     led_on();
     beep_on();
-    n_delay_ms(1000);
+    //n_delay_ms(1000);
+    delay_ms_1(1000);
 
 
     led_off();
     beep_off();
-    n_delay_ms(1000);
+    //n_delay_ms(1000);
+    delay_ms_1(1000);
+    
  
 
     while (1)
@@ -68,6 +71,10 @@ int main(void)
     //          led_switch (0,led_state);
     //      }
     //      n_delay_ms(10);
+    led_state = !led_state;
+    led_switch (0,led_state);
+    delay_ms_1(1000);
+
      }
        
     return 0;
