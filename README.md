@@ -71,6 +71,10 @@ git push -u origin master<br>
 ## 10_epit_timer
 * Chapter 24​: Enhanced Periodic Interrupt Timer (EPIT)
 
+## 12_uart
+* 55.15.5 UART Control Register 3 (UARTx_UCR3) ->RXDMUXSEL
+* NOTE: In this chip, UARTs are used in MUXED mode, so that this bit should always be set.
+
 
 	
 		
