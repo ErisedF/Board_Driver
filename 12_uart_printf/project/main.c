@@ -1,4 +1,5 @@
 #include "imx6ul.h"
+#include "stdio.h"
 
 #include "bsp_clk.h"
 #include "bsp_gpio.h"
@@ -20,7 +21,8 @@ int main(void)
     //int key_value;
     //int i = 0;
     unsigned char led_state = OFF;
-    unsigned char a = 0;
+    int a ;
+    int b ;
     //unsigned char beep_state = OFF;
     /*初始化*/
     int_init();
@@ -75,15 +77,11 @@ int main(void)
     //          led_switch (0,led_state);
     //      }
     //      n_delay_ms(10);
-    transmit_string("输入一个字符：");   
-    a = receive_char(); 
-    transmit_char(a);
-    transmit_string("\r\n");
+    printf("输入两个整数，空格隔开：");   
+    scanf("%d %d",&a,&b);
+    printf("\r\n %d+%d=%d\r\n",a,b,a+b);   
 
-    //显示
-    transmit_string("输入的字符为：");
-    transmit_char(a);   
-    transmit_string("\r\n");
+  
 
 
 

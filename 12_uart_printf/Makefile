@@ -1,10 +1,16 @@
 CROSS_COMPILE ?= arm-linux-gnueabihf-
-TARGET		  ?= uart
+TARGET		  ?= uart_printf
 
 CC			  := $(CROSS_COMPILE)gcc
 LD			  := $(CROSS_COMPILE)ld 
 OBJCOPY 	  := $(CROSS_COMPILE)objcopy
 OBJDUMP		  := $(CROSS_COMPILE)objdump 
+
+#添加库路径
+#LIBPATH		   := -lgcc -L /usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4
+#要加根路径符号  /
+LIBPATH	      := -lgcc -L /usr/local/arm/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/lib/gcc/arm-linux-gnueabihf/4.9.4
+
 
 #头文件路径 %.h
 INCUDIRS 	  := imx6ull \
@@ -18,7 +24,9 @@ INCUDIRS 	  := imx6ull \
 				 bsp/exti \
 				 bsp/epit \
 				 bsp/key_filter \
-				 bsp/uart
+				 bsp/uart \
+				 stdio/lib \
+				 stdio/include
 
 				 
 
@@ -34,7 +42,9 @@ SRCDIRS 	   := project \
 				  bsp/exti \
 				  bsp/epit \
 				  bsp/key_filter \
-				  bsp/uart
+				  bsp/uart \
+				 stdio/lib \
+				 stdio/include
 
 #Makefile 指定头文件时需要 -I
 #$(patsubst <pattern>,<replacement>,<text>) ,搜索<text>，若符合<pattern>，则用<replacement>替换
@@ -61,8 +71,9 @@ OBJS 		   := $(SOBJS) $(COBJS) #%.o 文件
 #VPATH = src:../headers  文件搜索 如果定义了这个变量，那么，make 就会在当当前目录找不到的情况下，到所指定的目录中去找寻文件了
 VPATH		   := $(SRCDIRS)
 
+#链接添加了$(LIBPATH)
 $(TARGET).bin  : $(OBJS)
-	$(LD) -Timx6ull.lds $^ -o $(TARGET).elf
+	$(LD) -Timx6ull.lds $^ -o $(TARGET).elf $(LIBPATH)	
 	$(OBJCOPY) -O binary -S $(TARGET).elf $@
 	$(OBJDUMP) -D -m arm $(TARGET).elf > $(TARGET).dis
 
@@ -71,9 +82,9 @@ $(TARGET).bin  : $(OBJS)
 #<commands>  ....   
 #<target-pattern>指定targets的模式 <prereq-patterns ...> 对<target-pattern>的模式再进行一次依赖目标定义
 $(SOBJS)       : obj/%.o: %.s  #把%，s 编译为%.o文件 并在生成的%.o文件前加路径 obj/ 模式修饰
-	$(CC) -Wall -nostdlib -c $(INCLUDE) $< -o $@
+	$(CC) -Wall -nostdlib -fno-builtin -c $(INCLUDE) $< -o $@
 $(COBJS)       : obj/%.o: %.c  #把%，c 编译为%.o文件 并在生成的%.o文件前加路径 obj/ 模式修饰
-	$(CC) -Wall -nostdlib -c $(INCLUDE) $< -o $@
+	$(CC) -Wall -Wa,-mimplicit-it=thumb -nostdlib -fno-builtin -c $(INCLUDE) $< -o $@
 
 
 print:

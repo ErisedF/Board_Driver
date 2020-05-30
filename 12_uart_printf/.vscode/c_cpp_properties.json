@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/imx6ull",
+                "${workspaceFolder}/stdio/include",
                 "${workspaceFolder}/project",
                 "${workspaceFolder}/obj",
                 "${workspaceFolder}/bsp/gpio",
